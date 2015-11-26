@@ -5,7 +5,7 @@
 This library can draw on a canvas in iOS.
 
 ### Demo Screen
-
+![draw_canvas_demo](http://pear.chat/image/drawcanvasdemo-o.gif)
 
 ### Installation
 <code>
