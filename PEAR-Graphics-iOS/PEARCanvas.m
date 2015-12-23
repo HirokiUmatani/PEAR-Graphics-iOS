@@ -46,7 +46,11 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     /* set draw area */
     [self.image drawInRect:self.frame];
+    /* context bitmap*/
     CGBitmapContextCreateImage(context);
+    /* save context */
+    CGContextSaveGState(context);
+    
 }
 
 - (void)setPencilWithShape:(CGLineCap)shape
