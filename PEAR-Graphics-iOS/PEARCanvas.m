@@ -80,6 +80,7 @@
 
 - (void)drawEnd
 {
+    _lastImage = self.image;
     UIGraphicsEndImageContext();
     if (_lastImage)
     {
