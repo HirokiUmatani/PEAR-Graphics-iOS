@@ -26,8 +26,6 @@
 {
     if (self = [super initWithFrame:frame])
     {
-        self.opaque = NO;
-        self.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.0f];
         _undoLists = @[].mutableCopy;
         _redoLists = @[].mutableCopy;
         [self insertCanvasOnView:view index:index];
@@ -45,8 +43,10 @@
 {
     /* draw start */
     UIGraphicsBeginImageContext(self.frame.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
     /* set draw area */
     [self.image drawInRect:self.frame];
+    CGBitmapContextCreateImage(context);
 }
 
 - (void)setPencilWithShape:(CGLineCap)shape
@@ -77,7 +77,6 @@
 - (void)drawEnd
 {
     UIGraphicsEndImageContext();
-    _lastImage = self.image;
     if (_lastImage)
     {
         [_undoLists addObject:_lastImage];
