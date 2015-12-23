@@ -63,6 +63,15 @@ PEARCanvas *_canvas = [[PEARCanvas alloc] initWithFrame:self.view.frame
     [_canvas fetchSaveDataAtIndex:0];
 ```
 
+#####□redo
+``` Objective−C
+    [_canvas redo];
+```
+
+#####□undo
+``` Objective−C
+    [_canvas undo];
+```
 ### Document
 [document library](http://cocoadocs.org/docsets/PEAR-Graphics-iOS)
 
