@@ -78,8 +78,10 @@
 {
     UIGraphicsEndImageContext();
     _lastImage = self.image;
-    [_undoLists addObject:_lastImage];
-
+    if (_lastImage)
+    {
+        [_undoLists addObject:_lastImage];
+    }
 }
 
 - (void)undo
@@ -108,6 +110,7 @@
 {
     self.image = nil;
     _lastImage = nil;
+    _bezierPath = nil;
     _undoLists = @[].mutableCopy;
     _redoLists = @[].mutableCopy;
 }
