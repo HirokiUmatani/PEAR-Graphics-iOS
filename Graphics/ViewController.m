@@ -53,11 +53,13 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
     [self draw:touches];
 }
 
-
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_canvas drawEnd];
+}
 - (void)draw:(NSSet *)touches
 {
     [_canvas setMovePointWithTouches:touches];
@@ -67,7 +69,6 @@
                      colorGreen:0.0  colorBlue:0.0
                           alpha:1.0];
     [_canvas draw];
-    [_canvas drawEnd];
 }
 
 - (IBAction)tapMenu:(UIButton *)sender
@@ -87,8 +88,17 @@
 }
 - (IBAction)clearButton:(UIButton *)sender
 {
-    _canvas.image = nil;
+    [_canvas clear];
 }
+- (IBAction)undoButton:(UIButton *)sender
+{
+    [_canvas undo];
+}
+- (IBAction)redoButton:(UIButton *)sender
+{
+    [_canvas redo];
+}
+
 #define BUTTON_HEIGHT 76
 #define MARGIN 10
 - (void)showMenu

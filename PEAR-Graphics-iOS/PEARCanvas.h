@@ -30,6 +30,12 @@
 
 - (void)drawEnd;
 
+- (void)undo;
+
+- (void)redo;
+
+- (void)clear;
+
 - (void)setTouchPointWithTouches:(NSSet *)touches;
 
 - (void)setMovePointWithTouches:(NSSet *)touches;

@@ -9,9 +9,13 @@
 #import "DataConvertor.h"
 #import "PEARCanvas.h"
 @interface PEARCanvas()
-@property (nonatomic,assign)CGPoint     touchPoint;
-@property (nonatomic,assign)CGPoint     movePoint;
-@property (nonatomic,assign)NSInteger   page;
+@property (nonatomic,assign)CGPoint         touchPoint;
+@property (nonatomic,assign)CGPoint         movePoint;
+@property (nonatomic,assign)NSInteger       page;
+@property (nonatomic,strong)NSMutableArray  *undoLists;
+@property (nonatomic,strong)NSMutableArray  *redoLists;
+@property (nonatomic,strong)UIBezierPath    *bezierPath;
+@property (nonatomic,strong)UIImage         *lastImage;
 @property (nonatomic,strong)PEARFileManager *fileManager;
 @end
 @implementation PEARCanvas
@@ -24,6 +28,8 @@
     {
         self.opaque = NO;
         self.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.0f];
+        _undoLists = @[].mutableCopy;
+        _redoLists = @[].mutableCopy;
         [self insertCanvasOnView:view index:index];
     }
     return self;
@@ -52,26 +58,59 @@
 
 {
     /* Pencil */
-    CGContextSetLineCap(UIGraphicsGetCurrentContext(), shape);
-    CGContextSetLineWidth(UIGraphicsGetCurrentContext(),thickness);
-    CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), red, green, blue, alpha);
+    _bezierPath = [UIBezierPath bezierPath];
+    _bezierPath.lineCapStyle = shape;
+    _bezierPath.lineWidth = thickness;
+    [[UIColor colorWithRed:red green:green blue:blue alpha:alpha] setStroke];
 }
 
 - (void)draw
 {
     /* draw */
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), _touchPoint.x, _touchPoint.y);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), _movePoint.x, _movePoint.y);
-    CGContextStrokePath(UIGraphicsGetCurrentContext());
+    [_bezierPath moveToPoint:CGPointMake(_touchPoint.x, _touchPoint.y)];
+    [_bezierPath addLineToPoint:CGPointMake(_movePoint.x, _movePoint.y)];
+    [_bezierPath stroke];
+    _touchPoint = _movePoint;
     self.image = UIGraphicsGetImageFromCurrentImageContext();
 }
 
 - (void)drawEnd
 {
     UIGraphicsEndImageContext();
-    _touchPoint = _movePoint;
+    _lastImage = self.image;
+    [_undoLists addObject:_lastImage];
+
 }
 
+- (void)undo
+{
+    if (_undoLists.count > 0)
+    {
+        [_redoLists addObject:_lastImage];
+        [_undoLists removeLastObject];
+        self.image = _undoLists.lastObject;
+        _lastImage = self.image;
+    }
+}
+
+- (void)redo
+{
+    if (_redoLists.count > 0)
+    {
+        [_undoLists addObject:_redoLists.lastObject];
+        [_redoLists removeLastObject];
+        self.image = _undoLists.lastObject;
+        _lastImage = self.image;
+    }
+}
+
+- (void)clear
+{
+    self.image = nil;
+    _lastImage = nil;
+    _undoLists = @[].mutableCopy;
+    _redoLists = @[].mutableCopy;
+}
 - (void)setTouchPointWithTouches:(NSSet *)touches
 {
     UITouch *touch = [touches anyObject];
@@ -82,7 +121,6 @@
 {
     UITouch *touch = [touches anyObject];
     _movePoint = [touch locationInView:self];
-    
 }
 
 #define DIR_NAME @"draw_data"
@@ -102,6 +140,12 @@
     BOOL ret = [_fileManager createFileWithData:data
                                        filePath:savePath
                                       permisson:PERMISSION];
+    if (!ret)
+    {
+        ret = [_fileManager updateFileWithData:data
+                                      filePath:savePath
+                                     permisson:PERMISSION];
+    }
     if (ret)
     {
         // success

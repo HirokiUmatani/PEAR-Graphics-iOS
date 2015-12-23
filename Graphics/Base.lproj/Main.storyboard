@@ -98,24 +98,50 @@
                                     <action selector="tapMenu:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tNB-Z6-Lyf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3lf-Nf-cCZ">
+                                <rect key="frame" x="322" y="560" width="35" height="30"/>
+                                <color key="backgroundColor" red="0.13725490200000001" green="0.078431372550000003" blue="0.32156862749999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="undo">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="undoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="slX-01-m2h"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GSj-Xs-B2F">
+                                <rect key="frame" x="247" y="560" width="32" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="redo">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="redoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="52A-Ex-Rgq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="3kR-aI-fcq" secondAttribute="bottom" constant="256" id="613-hc-AFq"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ecr-Ao-WRu" secondAttribute="bottom" constant="176" id="7dr-MP-7t2"/>
                             <constraint firstAttribute="trailing" secondItem="FQh-nr-pwA" secondAttribute="trailing" id="DaO-G8-ICH"/>
+                            <constraint firstItem="GSj-Xs-B2F" firstAttribute="bottom" secondItem="3lf-Nf-cCZ" secondAttribute="bottom" id="Fcl-9l-BLp"/>
                             <constraint firstItem="UT3-qE-sGT" firstAttribute="leading" secondItem="FQh-nr-pwA" secondAttribute="leading" id="PxA-gA-fzM"/>
                             <constraint firstItem="UT3-qE-sGT" firstAttribute="trailing" secondItem="FQh-nr-pwA" secondAttribute="trailing" id="TVr-v5-g3a"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="FQh-nr-pwA" secondAttribute="bottom" constant="10" id="Ufv-N8-amQ"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="UT3-qE-sGT" secondAttribute="bottom" constant="92" id="Uqv-LJ-oC8"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="3lf-Nf-cCZ" secondAttribute="bottom" constant="11" id="bcK-cR-3Vf"/>
                             <constraint firstItem="3kR-aI-fcq" firstAttribute="leading" secondItem="FQh-nr-pwA" secondAttribute="leading" id="dPg-TC-Efw"/>
                             <constraint firstItem="FQh-nr-pwA" firstAttribute="top" secondItem="UT3-qE-sGT" secondAttribute="bottom" id="hgS-Qx-SyJ"/>
+                            <constraint firstItem="FQh-nr-pwA" firstAttribute="leading" secondItem="3lf-Nf-cCZ" secondAttribute="trailing" constant="171" id="kIF-B0-fQB"/>
+                            <constraint firstItem="3lf-Nf-cCZ" firstAttribute="bottom" secondItem="FQh-nr-pwA" secondAttribute="bottom" id="lcz-tn-sNN"/>
                             <constraint firstItem="3kR-aI-fcq" firstAttribute="trailing" secondItem="FQh-nr-pwA" secondAttribute="trailing" id="mwf-Ij-mEh"/>
                             <constraint firstItem="Ecr-Ao-WRu" firstAttribute="leading" secondItem="FQh-nr-pwA" secondAttribute="leading" id="oa9-Xx-SPh"/>
+                            <constraint firstItem="3lf-Nf-cCZ" firstAttribute="leading" secondItem="GSj-Xs-B2F" secondAttribute="trailing" constant="43" id="psS-Wv-oI1"/>
                             <constraint firstItem="Ecr-Ao-WRu" firstAttribute="trailing" secondItem="FQh-nr-pwA" secondAttribute="trailing" id="zlR-Es-l3t"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="bcK-cR-3Vf"/>
                                 <exclude reference="hgS-Qx-SyJ"/>
                             </mask>
                         </variation>

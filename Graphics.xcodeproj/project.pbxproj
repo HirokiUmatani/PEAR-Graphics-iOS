@@ -41,7 +41,7 @@
 		F485F7A41C02CDB700A7EBAF /* PEARDataViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEARDataViewViewController.h; sourceTree = "<group>"; };
 		F485F7A51C02CDB700A7EBAF /* PEARDataViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEARDataViewViewController.m; sourceTree = "<group>"; };
 		F485F7A71C02E90B00A7EBAF /* backGroundView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backGroundView.png; sourceTree = "<group>"; };
-		F4C276AB1C1D1E0C0068343A /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		F4C276AB1C1D1E0C0068343A /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
