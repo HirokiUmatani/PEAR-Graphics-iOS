@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ViewController : UIViewController
+#import "PEARDataViewViewController.h"
+@interface ViewController : UIViewController <PEARDataViewViewControllerDelegate>
 
 
 @end

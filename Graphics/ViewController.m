@@ -26,6 +26,7 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:
                                  [UIImage imageNamed:@"backGroundView"]];
     
+   
     _canvas = [[PEARCanvas alloc] initWithFrame:self.view.frame
                                          onView:self.view
                                           index:0];
@@ -123,4 +124,19 @@
      }];
 }
 
+#pragma mark - Segue
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"PEARDataViewViewController"]) {
+        PEARDataViewViewController *dataViewViewController = segue.destinationViewController;
+        dataViewViewController.delegate = self;
+       
+    }
+}
+#pragma mark - PEARDataViewViewControllerDelegate
+- (void)didSelectLoadImage:(UIImage *)image
+{
+    _canvas.image = nil;
+    _canvas.image = image;
+}
 @end

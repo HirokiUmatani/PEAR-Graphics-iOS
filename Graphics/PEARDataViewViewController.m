@@ -44,11 +44,10 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self dismissViewControllerAnimated:YES
-                             completion:^
-    {
-        
-    }];
+    PEARCanvas *canvas = [PEARCanvas new];
+    UIImage *image = [canvas fetchSaveDataAtIndex:indexPath.row];
+    [_delegate didSelectLoadImage:image];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -63,6 +62,7 @@
     UITableViewCell *cell = [UITableViewCell new];
     
     cell.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"clearBackGround"]];
+
     UIImage * image = _cellLists[indexPath.row];
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(130, 18, 280, 144)];
     
@@ -79,6 +79,4 @@
     _cellLists = @[].mutableCopy;
     _cellLists = [canvas fetchSaveData].mutableCopy;
 }
-
-
 @end

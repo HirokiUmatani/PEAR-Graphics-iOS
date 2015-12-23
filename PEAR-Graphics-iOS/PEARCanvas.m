@@ -5,12 +5,14 @@
 //  Created by hirokiumatani on 2015/11/22.
 //  Copyright © 2015年 hirokiumatani. All rights reserved.
 //
-
+#import "PEARFileManager.h"
+#import "DataConvertor.h"
 #import "PEARCanvas.h"
 @interface PEARCanvas()
 @property (nonatomic,assign)CGPoint     touchPoint;
 @property (nonatomic,assign)CGPoint     movePoint;
 @property (nonatomic,assign)NSInteger   page;
+@property (nonatomic,strong)PEARFileManager *fileManager;
 @end
 @implementation PEARCanvas
 
@@ -83,17 +85,24 @@
     
 }
 
+#define DIR_NAME @"draw_data"
+#define PERMISSION @0755
+
 - (void)save
 {
-    NSData *data = UIImagePNGRepresentation(self.image);
+    _fileManager = [PEARFileManager sharedInstatnce];
+    NSData *data =[DataConvertor dataFromPNGImage:self.image];
+
+    [_fileManager createDirectory:DIR_NAME
+                        permisson:PERMISSION];
     
-    NSArray *array = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cacheDirPath = [array objectAtIndex:0];
-    
-    NSString *fileName = [NSString stringWithFormat:@"save_%zd.png",self.page];
-    NSString *filePath = [cacheDirPath stringByAppendingPathComponent:fileName];
-    
-    if ([data writeToFile:filePath atomically:YES])
+    NSString *saveName = [NSString stringWithFormat:@"save_%zd.png",self.page];
+    NSString *savePath = [_fileManager joinFileName:saveName
+                                          inDirPath:DIR_NAME];
+    BOOL ret = [_fileManager createFileWithData:data
+                                       filePath:savePath
+                                      permisson:PERMISSION];
+    if (ret)
     {
         // success
         self.page ++;
@@ -104,17 +113,23 @@
     }
 }
 
+
 - (NSArray *)fetchSaveData
 {
-    NSMutableArray * results = @[].mutableCopy;
-    NSString * filePath = [self filePath];
-    NSArray * fileNames = [self fileNames];
+    _fileManager = [PEARFileManager sharedInstatnce];
+    
+    NSMutableArray *results     = @[].mutableCopy;
+    
+    NSString       *dirPath     = [_fileManager joinFileName:DIR_NAME
+                                                   inDirPath:[_fileManager getRootDirectoryPath]];
+    NSArray        *fileNames   = [_fileManager fetchFileNameListsWithDirPath:dirPath];
     
     for (NSString *fileName in fileNames)
     {
-        NSString *fullPath = [NSString stringWithFormat:@"%@/%@",filePath,fileName];
-        NSData *data = [self loadData:fullPath];
-        UIImage *image = [UIImage imageWithData:data];
+        
+        NSString *filePath  = [_fileManager joinFileName:fileName inDirPath:DIR_NAME];
+        NSData   *data      = [_fileManager fetchFileDataWithPath:filePath];
+        UIImage  *image     = [DataConvertor imageFromData:data];
         if (image)
         {
             [results addObject:image];
@@ -129,25 +144,4 @@
     UIImage *image = fetchLists[index];
     return image;
 }
-
-- (NSString *)filePath
-{
-    NSArray *array = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cacheDirPath = [array objectAtIndex:0];
-    return cacheDirPath;
-}
-
-- (NSArray *)fileNames
-{
-    NSArray *array = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cacheDirPath = [array objectAtIndex:0];
-    
-    return [[NSFileManager defaultManager]  contentsOfDirectoryAtPath:cacheDirPath error:nil];
-}
-
-- (NSData*)loadData:(NSString*)fileName
-{
-    return [[NSData alloc] initWithContentsOfFile:fileName];
-}
-
 @end

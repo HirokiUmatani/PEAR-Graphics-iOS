@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol PEARDataViewViewControllerDelegate <NSObject>
+- (void)didSelectLoadImage:(UIImage *)image;
+@end
 @interface PEARDataViewViewController : UIViewController
-
+@property (nonatomic,assign) id <PEARDataViewViewControllerDelegate> delegate;
 @end

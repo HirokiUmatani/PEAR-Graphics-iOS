@@ -1,0 +1,13 @@
+PODS:
+  - PEAR-DataConvertor-iOS (1.0.1)
+  - PEAR-FileManager-iOS (1.3.0)
+
+DEPENDENCIES:
+  - PEAR-DataConvertor-iOS
+  - PEAR-FileManager-iOS
+
+SPEC CHECKSUMS:
+  PEAR-DataConvertor-iOS: 36bb03ce42d516f9a53e4f6a55b0294afded9e50
+  PEAR-FileManager-iOS: 6871687f9fbcdb1249e5ad982ba2fedac773ec2b
+
+COCOAPODS: 0.39.0
